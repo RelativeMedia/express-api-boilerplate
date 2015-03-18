@@ -4,13 +4,13 @@
 
 // BASE SETUP
 // =============================================================================
-
 var express    = require('express');
 var multer     = require('multer');
 var bodyParser = require('body-parser');
 var morgan     = require('morgan');
 var path       = require('path');
 var mongoose   = require('mongoose');
+var jwt        = require('express-jwt');
 var config     = require('./config');
 var utils      = require('./utils');
 var log        = require('./logger');
@@ -61,8 +61,29 @@ passport.use(new LocalStrategy(function(username, password, done){
     });
   }
 ));
-
 app.use(passport.initialize());
+
+// Setup JWT protection using express-jwt, add exceptions for /api/user/login
+// =============================================================================
+app.use(
+  jwt({ secret: config.auth.token.secret }).unless({
+  path: [
+    '/api/user/login'
+  ]
+}));
+
+app.use(function(err, req, res, next){
+  
+  if(err.name === "UnauthorizedError"){
+    res.status(401).json(err);
+    next(err);
+  }else if(err){
+    res.status(500).json(err);
+    next(err);
+  }
+  
+});
+
 app = require('./routes')(app);
 app.listen(config.server.port, config.server.ip, function(){
   log.info('Server Listening at: http://' + config.server.ip + ':' + config.server.port);

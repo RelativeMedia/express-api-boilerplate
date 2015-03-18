@@ -1,5 +1,9 @@
 'use strict';
 
+// routes/home.js
+
+// HOME ROUTE
+// =============================================================================
 var express = require('express');
 var Router  = express.Router();
 
