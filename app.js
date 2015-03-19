@@ -64,7 +64,7 @@ app.use('/api',
       { path: '/users', method: 'GET', handler: require('./controllers/users/list'), middleware: [ jwt({ secret: config.auth.token.secret }), errorHandler ] },
       // show a single user
       { path: '/users/:id', method: 'GET', handler: require('./controllers/users/index'), middleware: [ jwt({ secret: config.auth.token.secret }), errorHandler ] },
-      //
+      // delete a single user
       { path: '/users/:id', method: 'DELETE', handler: require('./controllers/users/delete'), middleware: [ jwt({ secret: config.auth.token.secret }), errorHandler ] },
     ]
   })
