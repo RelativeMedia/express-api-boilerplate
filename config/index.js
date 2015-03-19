@@ -7,7 +7,7 @@
 var fs          = require('fs');
 var config      = {};
 var localConfig = {};
-var utils       = require('../utils');
+var utils       = appRequire('lib/utils');
 
 fs.readdirSync(__dirname)
   .filter(function(file){

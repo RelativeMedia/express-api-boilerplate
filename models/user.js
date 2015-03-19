@@ -6,8 +6,8 @@
 //==============================================================================
 var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt');
-var config   = require('../config');
-var log      = require('../logger');
+var config   = appRequire('config');
+var log      = appRequire('lib/logger');
 var Schema   = mongoose.Schema;
 
 var UserSchema = new Schema({
