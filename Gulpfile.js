@@ -1,2 +1,2 @@
-''use strict';
+'use strict';
 var server = require('./server');

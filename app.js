@@ -1,7 +1,6 @@
 'use strict';
 
 // app.js
-
 // APP STARTUP
 // =============================================================================
 require('./lib/app_require');
@@ -44,6 +43,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer());
 
 function errorHandler(err, req, res, next){
+
   if (err.name === 'UnauthorizedError') {
     return res.status(401).json(err);
   }else if(err){
@@ -57,9 +57,9 @@ app.use('/api',
   enrouten({
     routes: [
       // Log a user in
-      { path: '/auth/login', method: 'POST', handler: require('./controllers/auth/login') },
+      { path: '/auth/login', method: 'POST', handler: require('./controllers/auth/login'), middleware: [ errorHandler ]  },
       // create a new user
-      { path: '/users', method: 'POST', handler: require('./controllers/users/create') },
+      { path: '/users', method: 'POST', handler: require('./controllers/users/create'), middleware: [ errorHandler ] },
       // Show all users
       { path: '/users', method: 'GET', handler: require('./controllers/users/list'), middleware: [ jwt({ secret: config.auth.token.secret }), errorHandler ] },
       // show a single user
